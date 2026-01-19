@@ -1,0 +1,13 @@
+.plastic/
+.vs/
+.vscode/
+.idea/
+.vscode/
+Library/
+Logs/
+Temp/
+UIElementsSchema/
+UserSettings/
+Build/
+
+**.kate-swp
