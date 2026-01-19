@@ -6,8 +6,6 @@ Special for DES Winter School 2026
 **Terokhin *"MiraDiv"* Myroslav** - Team Leader,<br>
 **Potopalskyy *"BiBy_BoX"* Ivan** - Plot and narrative desing,<br>
 **Gryshchenko Daria** - Sprite and art design,<br>
-**Berezhnyy Nikita** - Does something,<br>
-**Yavorskyy Maksym** - Does something 2<br>
 
 # For contributors
 First of all, download Unity Hub and download **EXACTLY the <ins>6000.3.4f1** version of engine. Make sure you enabled "Windows Build Support (Mono)" module before downloading the rest of engine, to not lose the time.
