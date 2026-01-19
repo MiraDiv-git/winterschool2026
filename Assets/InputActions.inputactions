@@ -114,6 +114,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b244301f-4bf8-4754-8350-5d676d211792",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "34ff52e9-cc86-475c-bf3b-2f60ffe59c45",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
