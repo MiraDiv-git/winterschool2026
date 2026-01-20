@@ -19,20 +19,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform[] wallJumpCheck;
     [SerializeField] private float wallCheckRadius = 0.2f;
 
-    private int wallJumpCount = 1;
-    private bool isControlLocked = false;
+    private bool isControlLocked = false; // locker for wall jumps
 
     private Rigidbody2D rb;
     
 
-    private InputAction moveA;
-    private InputAction jumpA;
+    private InputAction moveA; // Axis for movement
+    private InputAction jumpA; // Button for jump
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        moveA = inputActions.FindAction("Player_Keyboard/Move");
-        jumpA = inputActions.FindAction("Player_Keyboard/Jump");
+        moveA = inputActions.FindAction("Player_Keyboard/Move"); // using input action asset as json file, as
+        jumpA = inputActions.FindAction("Player_Keyboard/Jump"); // it's more comfy 4 me
     }
 
     void Update()
@@ -44,22 +43,23 @@ public class PlayerController : MonoBehaviour
 
     void ApplyMovement()
     {
-        float moveInput = moveA.ReadValue<float>();
+        float moveInput = moveA.ReadValue<float>(); // reading input as axis (-1 for A, 1 for D and 0 for nothing)
 
         if (isControlLocked)
         {
-            if (Mathf.Abs(moveInput) < 0.01f)
+            if (Mathf.Abs(moveInput) < 0.01f) // If input goes to 0, then button was released after jump
             {
-                isControlLocked = false;
+                isControlLocked = false; // unlocking the control
             }
             else
             {
+                // Saves the inertia from jump and locks the override of horizontal speed
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y);
                 return;
             }
         }
 
-        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y); // Basic movement
     }
 
     void ApplyJumping()
@@ -72,16 +72,13 @@ public class PlayerController : MonoBehaviour
 
     void ApplyWallJump()
     {
-        if (IsWall()) wallJumpCount = 1;
-
-        if (jumpA.triggered && IsWall() && wallJumpCount > 0)
+        if (jumpA.triggered && IsWall())
         {
-            wallJumpCount = 0;
             
-            float jumpDir = GetWallDirection() * -1; 
+            float jumpDir = GetWallDirection() * -1; // Sets the jump direction to opposite side from jump wall
 
-            rb.linearVelocity = Vector2.zero; 
-            rb.AddForce(new Vector2(jumpDir * wallJumpForce, jumpHeight), ForceMode2D.Impulse);
+            rb.linearVelocity = Vector2.zero; // Resets the velocity to apply force overriding the movement
+            rb.AddForce(new Vector2(jumpDir * wallJumpForce, jumpHeight), ForceMode2D.Impulse); // makes wall jump
 
             isControlLocked = true;
     }
@@ -90,11 +87,14 @@ public class PlayerController : MonoBehaviour
     bool IsGrounded()
     {
         if (groundCheck == null) return false;
-
+        
+        // Creates a physics circle that checks the collider in it's area from ground layer.
+        // Radius increases the size of this circle
+        // If it 'senses' the collider - we're on the ground. If not - we're not
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    bool IsWall()
+    bool IsWall() // Works mostly the same as IsGrounded
     {
         if (wallJumpCheck == null) return false;
 
@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
     {
         foreach (Transform check in wallJumpCheck)
         {
+            // If the physics circle senses the collider of jump wall, returns the direction from what wall it touched
             if (Physics2D.OverlapCircle(check.position, wallCheckRadius, groundLayer))
             {
                 return check.position.x > transform.position.x ? 1 : -1;
@@ -120,7 +121,7 @@ public class PlayerController : MonoBehaviour
         return 0;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmos() // Just draws physics circles through the gizmos so we can see the area of them
     {
         if (groundCheck != null)
         {
@@ -140,7 +141,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-private void OnEnable() 
+private void OnEnable()
 {
     moveA?.Enable();
     jumpA?.Enable();
