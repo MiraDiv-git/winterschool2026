@@ -938,7 +938,7 @@ GameObject:
   - component: {fileID: 877987627}
   - component: {fileID: 877987626}
   m_Layer: 3
-  m_Name: Wall (1)
+  m_Name: JumpWall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -954,7 +954,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -6.25, y: 4.18, z: 0}
-  m_LocalScale: {x: 9.122487, y: 0.4865, z: 1}
+  m_LocalScale: {x: 9.122487, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 606044795}
@@ -969,7 +969,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 68fde87260faf3e298b9b3c766229910, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1606,7 +1606,7 @@ GameObject:
   - component: {fileID: 2109928349}
   - component: {fileID: 2109928348}
   m_Layer: 3
-  m_Name: Wall
+  m_Name: JumpWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1622,7 +1622,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 8.74, y: 6.5369, z: 0}
-  m_LocalScale: {x: 9.122487, y: 0.4865, z: 1}
+  m_LocalScale: {x: 9.122487, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 606044795}
@@ -1637,7 +1637,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 68fde87260faf3e298b9b3c766229910, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
