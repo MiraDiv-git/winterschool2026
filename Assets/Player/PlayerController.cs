@@ -11,8 +11,16 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private float checkRadius = 0.2f;
+    [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
+
+    [Header("Wall Jump Check")]
+    [SerializeField] private float wallJumpForce = 10f;
+    [SerializeField] private Transform[] wallJumpCheck;
+    [SerializeField] private float wallCheckRadius = 0.2f;
+
+    private int wallJumpCount = 1;
+    private bool isControlLocked = false;
 
     private Rigidbody2D rb;
     
@@ -31,12 +39,27 @@ public class PlayerController : MonoBehaviour
     {
         ApplyMovement();
         ApplyJumping();
+        ApplyWallJump();
     }
 
     void ApplyMovement()
     {
-        float value = moveA.ReadValue<float>();
-        rb.linearVelocity = new Vector2(value * speed, rb.linearVelocity.y);  
+        float moveInput = moveA.ReadValue<float>();
+
+        if (isControlLocked)
+        {
+            if (Mathf.Abs(moveInput) < 0.01f)
+            {
+                isControlLocked = false;
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y);
+                return;
+            }
+        }
+
+        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
     }
 
     void ApplyJumping()
@@ -47,18 +70,73 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void ApplyWallJump()
+    {
+        if (IsWall()) wallJumpCount = 1;
+
+        if (jumpA.triggered && IsWall() && wallJumpCount > 0)
+        {
+            wallJumpCount = 0;
+            
+            float jumpDir = GetWallDirection() * -1; 
+
+            rb.linearVelocity = Vector2.zero; 
+            rb.AddForce(new Vector2(jumpDir * wallJumpForce, jumpHeight), ForceMode2D.Impulse);
+
+            isControlLocked = true;
+    }
+    }
+
     bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+        if (groundCheck == null) return false;
+
+        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
+
+    bool IsWall()
+    {
+        if (wallJumpCheck == null) return false;
+
+        foreach (Transform check in wallJumpCheck)
+    {
+        if (Physics2D.OverlapCircle(check.position, wallCheckRadius, groundLayer))
+        {
+            return true;
+        }
+    }
+        return false;
+    }
+
+    float GetWallDirection()
+{
+    foreach (Transform check in wallJumpCheck)
+    {
+        if (Physics2D.OverlapCircle(check.position, wallCheckRadius, groundLayer))
+        {
+            return check.position.x > transform.position.x ? 1 : -1;
+        }
+    }
+    return 0;
+}
 
     private void OnDrawGizmos()
     {
         if (groundCheck != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
-            Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * checkRadius);
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+            Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundCheckRadius);
+        }
+
+        if (wallJumpCheck != null)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (Transform check in wallJumpCheck)
+            {
+                Gizmos.DrawWireSphere(check.position, wallCheckRadius);
+                Gizmos.DrawLine(check.position, check.position + Vector3.down * wallCheckRadius);
+            }
         }
     }
 
