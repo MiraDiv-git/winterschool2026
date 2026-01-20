@@ -1,11 +1,11 @@
-# Plat Up
+# Plat Up: Light & Dark
 Special for DES Winter School 2026
 
 # Team Staff
-**Ilya *"Relax"* Negusev** - Project Manager,<br>
-**Terokhin *"MiraDiv"* Myroslav** - Team Leader,<br>
-**Potopalskyy *"BiBy_BoX"* Ivan** - Plot and narrative desing,<br>
-**Gryshchenko Daria** - Sprite and art design,<br>
+**Myroslav *"MiraDiv"* Terokhin** - Team Leader, plot and idea author;<br>
+**Ilya *"Relax"* Negusev** - Head Programmer;<br>
+**Ivan *"BiBy_BoX"* Potopalskiy** - Mechanics and narrative design;<br>
+**Daria Gryshchenko** - Sprite and art design.<br>
 
 # For contributors
 First of all, download Unity Hub and download **EXACTLY the <ins>6000.3.4f1** version of engine. Make sure you enabled "Windows Build Support (Mono)" module before downloading the rest of engine, to not lose the time.

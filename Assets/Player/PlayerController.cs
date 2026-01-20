@@ -99,26 +99,26 @@ public class PlayerController : MonoBehaviour
         if (wallJumpCheck == null) return false;
 
         foreach (Transform check in wallJumpCheck)
-    {
-        if (Physics2D.OverlapCircle(check.position, wallCheckRadius, groundLayer))
         {
-            return true;
+            if (Physics2D.OverlapCircle(check.position, wallCheckRadius, groundLayer))
+            {
+                return true;
+            }
         }
-    }
         return false;
     }
 
     float GetWallDirection()
-{
-    foreach (Transform check in wallJumpCheck)
     {
-        if (Physics2D.OverlapCircle(check.position, wallCheckRadius, groundLayer))
+        foreach (Transform check in wallJumpCheck)
         {
-            return check.position.x > transform.position.x ? 1 : -1;
+            if (Physics2D.OverlapCircle(check.position, wallCheckRadius, groundLayer))
+            {
+                return check.position.x > transform.position.x ? 1 : -1;
+            }
         }
+        return 0;
     }
-    return 0;
-}
 
     private void OnDrawGizmos()
     {
