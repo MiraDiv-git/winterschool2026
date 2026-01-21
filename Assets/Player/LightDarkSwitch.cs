@@ -17,16 +17,19 @@ public class LightDarkSwitch : MonoBehaviour
 
     private SpriteRenderer playerSpriteRenderer;
     private InputAction switchA;
+    private Animator animator;
 
     private void OnValidate() // To make it work in the Editor
     {
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         UpdateVisuals(currentMode);
     }
 
     void Awake()
     {
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         switchA = inputActions.FindAction("Player_Keyboard/SwitchMode");
     }
 
@@ -55,5 +58,6 @@ public class LightDarkSwitch : MonoBehaviour
         darkLevel.SetActive(!isLight);
 
         playerSpriteRenderer.sprite = isLight ? lightSprite : darkSprite;
+        animator.SetBool("isWhite", isLight);
     }
 }
