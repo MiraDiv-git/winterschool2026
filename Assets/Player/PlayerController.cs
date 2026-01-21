@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallCheckRadius = 0.2f;
 
     private bool isControlLocked = false; // locker for wall jumps
-
+    private Animator animator; // Animation state machine
     private Rigidbody2D rb;
     
 
@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         moveA = inputActions.FindAction("Player_Keyboard/Move"); // using input action asset as json file, as
         jumpA = inputActions.FindAction("Player_Keyboard/Jump"); // it's more comfy 4 me
     }
@@ -60,6 +61,22 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y); // Basic movement
+
+        if (moveInput != 0) // Actions while player is moving
+        {
+            animator.SetBool("isMoving", true);
+
+            if (Mathf.Sign(moveInput) != Mathf.Sign(transform.localScale.x)) // turns -1.0f for left or 1.0f for right directions
+            {
+                Vector3 scale = transform.localScale; // Saves player's x scale
+                scale.x = Mathf.Abs(scale.x) * Mathf.Sign(moveInput); // sets -x for left and +x for right directions
+                transform.localScale = scale;
+            }
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
     }
 
     void ApplyJumping()
