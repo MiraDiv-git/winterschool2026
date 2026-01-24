@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Assets/Dialogue/_Window/DialogueWindow.cs" />
     <Compile Include="Assets/Player/LightDarkSwitch.cs" />
+    <Compile Include="Assets/_Test/DevButton.cs" />
     <Compile Include="Assets/Dialogue/_Window/TestAction.cs" />
     <Compile Include="Assets/Player/PlayerController.cs" />
   </ItemGroup>
