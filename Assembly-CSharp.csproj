@@ -52,8 +52,10 @@
     <Compile Include="Assets/Dialogue/_Window/DialogueWindow.cs" />
     <Compile Include="Assets/Player/LightDarkSwitch.cs" />
     <Compile Include="Assets/_Test/DevButton.cs" />
+    <Compile Include="Assets/Scenes/MainMenu/MenuScript.cs" />
     <Compile Include="Assets/Dialogue/_Window/TestAction.cs" />
     <Compile Include="Assets/Player/PlayerController.cs" />
+    <Compile Include="Assets/Scenes/DialogueScreens/Prologue/DialSoundEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

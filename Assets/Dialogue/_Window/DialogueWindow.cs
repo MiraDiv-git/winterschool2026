@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class DialogueWindow : MonoBehaviour
 {
@@ -42,6 +43,13 @@ public class DialogueWindow : MonoBehaviour
     private TMP_Text dialogueTextAsset;
     private Coroutine typingCoroutine;
     private bool isTyping = false;
+
+    public bool isLastLine {get; private set;} = false;
+
+    public int GetCurrentLine()
+    {
+        return startLine - 1;
+    }
     
     void OnValidate()
     {
@@ -84,8 +92,10 @@ public class DialogueWindow : MonoBehaviour
 
     void Start()
     {   
-        if (fadeIn) { StartCoroutine(FadeEffect(true)); }
-        else { UpdateDialogueText(); }
+        nextA.Disable();
+
+        if (fadeIn) StartCoroutine(FadeEffect(true));
+        else UpdateDialogueText();
     }
 
     void Update()
@@ -125,6 +135,7 @@ public class DialogueWindow : MonoBehaviour
         {
             if (fadeOut)
             {
+                isLastLine = true;
                 StartCoroutine(FadeEffect(false));
                 nextA.Disable();
             }
@@ -193,7 +204,11 @@ public class DialogueWindow : MonoBehaviour
         if (speakerGroup != null) speakerGroup.alpha = targetAlpha;
         if (dialogueGroup != null) dialogueGroup.alpha = targetAlpha;
 
-        if (!isFadeIn)
+        if (isFadeIn)
+        {
+            nextA.Enable(); 
+        }
+        else
         {
             actionOnEnd?.Invoke();
             gameObject.SetActive(false);
